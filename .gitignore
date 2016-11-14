@@ -1,3 +1,4 @@
 *.pyc
 settings.py
+err.log
 tasks/config.sh
