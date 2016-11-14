@@ -1,4 +1,6 @@
-source /home/yde/freeweb/tasks/config.sh
+# !/bin/bash
+FREEWEB_TASK_PATH=$(cd `dirname $0`;pwd)
+source $FREEWEB_TASK_PATH/config.sh
 
 # 选择生成密码的类型
 TYPE=-1

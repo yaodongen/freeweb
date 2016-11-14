@@ -1,7 +1,7 @@
 
 
-
-create database web_db;
+create database if not exists web_db;
+use web_db;
 create table if not exists ssserver(
     port int NOT NULL  key,
     password char(20) NOT NULL,
@@ -11,7 +11,7 @@ create table if not exists ssserver(
     used int default 0,
     last_update timestamp,
     create_time datetime
-    )engine=innodb;
+)engine=innodb;
 
 create table if not exists user(
     user char(30) key,
@@ -21,5 +21,5 @@ create table if not exists user(
     type tinyint default 1 comment " 0 public 1 login 2 donate",
     donate_money float default 0,
     create_time datetime
-    )engine=innodb;
+)engine=innodb;
 

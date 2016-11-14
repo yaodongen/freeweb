@@ -1,14 +1,17 @@
-# install.sh
-source config.sh
+# !/bin/bash 
+source ../config.sh
 
 # 初始化iptables
 # 统计输入输出的流量
 # 注意一条语句最多包含15个端口
-
 if [ x$1 = x ] ; then
     echo -e '请输入一个参数:\n 0 安装 1 删除'
     exit -1
 elif [ $1 -eq 0 ] ; then
+
+    echo "建立数据库和表..."
+    mysql -u$SQL_USER -p$SQL_PASSWORD < database.sql
+    echo "完成"
 
     echo "配置iptables ..."
     PORTS=$P_PORT
@@ -26,10 +29,7 @@ elif [ $1 -eq 0 ] ; then
     iptables -N $D_TABLE
     iptables -A OUTPUT -p tcp -m multiport --sports $PORTS -j $D_TABLE
     iptables -A INPUT -p tcp -m multiport --dports $PORTS -j $D_TABLE
-    echo "设置环境变量 ..."
-    echo "export FREEWEB_MAIN_PATH=$FREEWEB_MAIN_PATH" >> ~/.bashrc
-    echo "使环境变量生效 ..."
-    source ~/.bashrc
+    echo "完成"
 
 elif [ $1 -eq 1 ] ; then
 
@@ -52,6 +52,7 @@ elif [ $1 -eq 1 ] ; then
     iptables -D INPUT -p tcp -m multiport --dports $PORTS -j $D_TABLE
     iptables -F $D_TABLE
     iptables -X $D_TABLE
+    echo "完成"
 
 else
     echo -e '请输入一个参数:\n 0 安装 1 删除'

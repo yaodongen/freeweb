@@ -1,5 +1,8 @@
 # !/bin/bash
-source /home/yde/freeweb/tasks/config.sh
+FREEWEB_TASK_PATH=$(cd `dirname $0`;pwd)
+source $FREEWEB_TASK_PATH/config.sh
+
+
 IS_SERVER=false
 
 if [ $1 -eq 0 ] ; then
@@ -8,6 +11,8 @@ elif [ $1 -eq 1 ] ; then
     PRE=ssserver7
 elif [ $1 -eq 2 ] ; then
     PRE=ssserver8
+else
+    exit 0
 fi
 
 # 删除旧进程

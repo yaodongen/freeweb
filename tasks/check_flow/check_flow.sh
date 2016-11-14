@@ -1,5 +1,5 @@
 
-FREEWEB_TASK_PATH=/home/yde/freeweb/tasks
+FREEWEB_TASK_PATH=$(cd `dirname $0`/../ ;pwd)
 
 # 更新iptables数据
 /sbin/iptables -nxvL > $FREEWEB_TASK_PATH/check_flow/iptables.out

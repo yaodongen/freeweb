@@ -1,7 +1,3 @@
 # 正式上线前需要修改的事项
-config.sh main path
-run.sh path
-genports.sh path 
 is_server=true
 debug=true
-check_flow.sh  中 mainpath
