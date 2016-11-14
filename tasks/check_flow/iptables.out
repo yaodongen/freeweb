@@ -1,0 +1,47 @@
+Chain INPUT (policy ACCEPT 1072 packets, 111025 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ssserver6  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 6000,6001
+       0        0 ssserver7  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 7000,7001,7002
+       0        0 ssserver8  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 8000,8001,8002,8003,8004
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 1081 packets, 83560 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ssserver6  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 6000,6001
+       0        0 ssserver7  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 7000,7001,7002
+       0        0 ssserver8  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 8000,8001,8002,8003,8004
+
+Chain ssserver6 (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ssserver7 (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain ssserver8 (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8000 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        123123123 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8000 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8000
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8000
+       0        2 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8001 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        3 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8001 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8001
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8001
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8002 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8002 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8002
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8002
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8003 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8003 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8003
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8003
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8004 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8004 quota: 2048000000 bytes limit: avg 714/sec burst 100
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8004
+       0        0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8004
