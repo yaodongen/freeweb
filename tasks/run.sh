@@ -3,7 +3,6 @@ FREEWEB_TASK_PATH=$(cd `dirname $0`;pwd)
 source $FREEWEB_TASK_PATH/config.sh
 
 
-IS_SERVER=false
 
 if [ $1 -eq 0 ] ; then
     PRE=ssserver6
