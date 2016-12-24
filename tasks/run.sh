@@ -31,7 +31,7 @@ rm $FREEWEB_TASK_PATH/data/$PRE*.json
 # 启动新进程
 for path in `ls $FREEWEB_TASK_PATH/data/$PRE*.json`;do
     if [ $IS_SERVER == true ] ;then
-        ssserver -c  $path -d start
+        /usr/local/bin/ssserver -c  $path -d start
         # 检查是否正确启动,写入数据库
         success_load=`pgrep -f "/usr/local/bin/ssserver -c $path" `
         if [ -n "$success_load" ] ; then
