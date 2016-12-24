@@ -1,5 +1,5 @@
 # !/bin/bash
-FREEWEB_TASK_PATH=$(cd `dirname $0`;pwd)
+export FREEWEB_TASK_PATH=$(cd `dirname $0`;pwd)
 source $FREEWEB_TASK_PATH/config.sh
 
 

@@ -10,3 +10,4 @@ settings = {
 }
 
 db=torndb.Connection(host="localhost",user="freeweb",password="123456",database="web_db")
+mysql_db=MySQLdb.connect(host="localhost",user="freeweb",passwd="123456",db="web_db")
