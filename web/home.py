@@ -32,7 +32,8 @@ class BaseHandler(tornado.web.RequestHandler):
         data={}
         if data_type <= 1:
             data = db.get("select port as %sport ,password as %spassword from ssserver where state>0 and type=%s order by used limit 1;"%(prefix,prefix,data_type))
-            db.execute("update ssserver set used=used+1 where port=%s", data["%sport"%prefix])
+            if data:
+                db.execute("update ssserver set used=used+1 where port=%s", data["%sport"%prefix])
         elif data_type==2:
             data = db.get("select port as %sport ,password as %spassword from ssserver where state>0 and type=2 and owner=\"%s\" limit 1"%(prefix,prefix,self.get_current_user()))
             if not data:
@@ -51,11 +52,11 @@ class BaseHandler(tornado.web.RequestHandler):
             "donate_password":None,
             "user":None, 
         }
-        data.update(self._get_account_info(0))
+        data.update(self._get_account_info(0) or {})
         if self.current_user:
             data["user"]=self.current_user
         if self._get_user_type()>=1:
-            data.update(self._get_account_info(1))
+            data.update(self._get_account_info(1) or {})
         if self._get_user_type()>=2:
             data.update(self._get_account_info(2) or {"err_code":2000})
         return data
