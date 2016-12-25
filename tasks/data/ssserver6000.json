@@ -1,1 +1,0 @@
-{"log-file": "/var/log/ssserver6000.pid", "timeout": 300, "server_port": 6000, "local_port": 1080, "local_address": "127.0.0.1", "pid-file": "/var/run/ssserver6000.pid", "password": "9af230", "fast_open": false, "method": "aes-256-cfb", "server": "0.0.0.0"}

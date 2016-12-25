@@ -1,0 +1,35 @@
+
+IS_SERVER=false
+
+# 基础密码，shadowsocks的密码都是基于这个动态生成的
+FREEWEB_BASE_PASS=888888
+
+# 数据库信息
+SQL_USER=freeweb
+SQL_PASSWORD=123456
+
+# 公众端口是6000开始
+P_PORT=6000
+P_M_PORT=6999
+P_NUM=2
+# 防火墙配置
+P_TABLE=ssserver6
+# 单位B
+P_TOTAL_QUOTA=10240000000
+
+# 登录端口是7000开始
+L_PORT=7000
+L_M_PORT=7999
+L_NUM=3
+L_TABLE=ssserver7
+# 单位B
+L_TOTAL_QUOTA=90000000000
+
+# 捐助端口是8000开始
+D_PORT=8000
+D_M_PORT=8999
+D_NUM=5
+D_TABLE=ssserver8
+# 单位B
+D_PER_QUOTA=2048000000
+

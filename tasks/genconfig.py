@@ -6,7 +6,7 @@ import os
 
 # 这么写是因为这个项目是共享的，所以会gitignore settings.py
 sys.path.insert(0, os.path.abspath(os.path.join(__file__,"../../")))
-from settings import db
+from settings import mysql_db
 
 
 base_config = {
@@ -24,9 +24,9 @@ base_config = {
 
 
 def run(data_type):
-    cur=db.cursor()
+    cur=mysql_db.cursor()
     cur.execute("select port, password from ssserver where type=%s"%data_type)
-    main_path = os.environ.get('FREEWEB_MAIN_PATH')+"/tasks"
+    main_path = os.environ.get('FREEWEB_TASK_PATH')
     for port,password in cur.fetchall():
         base_config["server_port"]=port
         base_config["password"]=password
