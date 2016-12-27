@@ -5,7 +5,7 @@ FREEWEB_TASK_PATH=$(cd `dirname $0`/../ ;pwd)
 /sbin/iptables -nxvL > $FREEWEB_TASK_PATH/check_flow/iptables.out
 
 # 更新数据库
-/usr/bin/python $FREEWEB_TASK_PATH/check_flow/record.py $FREEWEB_TASK_PATH/check_flow/iptables.out
+/usr/bin/python $FREEWEB_TASK_PATH/check_flow/record.py $FREEWEB_TASK_PATH/check_flow/iptables.out >> $FREEWEB_TASK_PATH/../log/iptables.log
 
 
 
