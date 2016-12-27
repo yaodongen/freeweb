@@ -5,3 +5,4 @@ err.log
 tasks/config.sh
 tasks/check_flow/iptables.out
 *.log
+*.out
