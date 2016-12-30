@@ -4,13 +4,23 @@ import tornado.web
 import re
 import hashlib
 import os,sys
+import json
 sys.path.insert(0, os.path.abspath(os.path.join(__file__,"../../")))
+import logging
 from settings import db
+from settings import LOG_FILE_PATH
 
 EMAIL_PAT=re.compile(r"[\w\.]{1,20}@[\w\.]{1,10}")
 PHONE_PAT=re.compile(r"\d{11}")
 PASSWORD_PAT=re.compile(r"^[^;\"\'\-\\]{0,100}$")
 
+log_handler = logging.FileHandler(LOG_FILE_PATH)
+log_handler.setLevel(logging.INFO)
+formatter = logging.Formatter(fmt='%(asctime)s %(name)-12s %(levelname)-8s %(message)s', datefmt='%m-%d %H:%M')
+log_handler.setFormatter(formatter)
+
+my_log = logging.Logger('mylog')
+my_log.addHandler(log_handler)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -68,6 +78,10 @@ class MainHandler(BaseHandler):
     def get(self):
         # name = tornado.escape.xhtml_escape(self.current_user)
         data = self.get_user_info()
+        user = self.get_current_user()
+        if user:
+            my_log.info("main page visit: %s" % user)
+
         self.update_err_code(data)
         self.render("home.html",**data)
 
@@ -88,19 +102,26 @@ class LoginHandler(BaseHandler):
                 result=db.get("select type from user where user=%s and password=%s limit 1", user, password)
                 if result:
                     user_type=result["type"]
+                    my_log.info("login page : login success user:%s" % user)
                 else:
                     err_code=1001
+                    my_log.info("login page : password error user:%s" % user)
+
             # new user
             else:
                 db.execute("insert into user(user,password,create_time,total_flow) values (%s,%s,current_timestamp,0)",user,password) 
                 user_type=1
                 err_code=False
+                my_log.info("login page : new user:%s" % user)
         else:
             err_code=1000
+            my_log.info("login page : username error user:%s" % user)
+
         if not err_code:
             user=self.set_secure_cookie("user", self.get_argument("user"))
             user_type=self.set_secure_cookie("user_type", str(user_type))
             self.redirect("/")
+
         else:
             self.redirect("/?err_code=%s"%err_code)
 
