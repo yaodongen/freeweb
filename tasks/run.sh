@@ -69,7 +69,7 @@ elif [ $1 -eq 2   ] ; then
        /sbin/iptables -A ssserver8 -p tcp --dport ${path:(-9):4} -j DROP
        /sbin/iptables -A ssserver8 -p tcp --sport ${path:(-9):4} -j DROP
     done
-    echo `date` : "flushed iptables ssserver7" >>$FREEWEB_TASK_PATH/../log/start_server.log 
+    echo `date` : "flushed iptables ssserver8" >>$FREEWEB_TASK_PATH/../log/start_server.log 
 else 
     echo `date` : " ERROR flushed iptables" >>$FREEWEB_TASK_PATH/../log/start_server.log 
 fi

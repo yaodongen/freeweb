@@ -7,6 +7,7 @@
    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="static/sha256.js"></script>
    {% block style %}
     <style>
         body {
@@ -80,6 +81,8 @@
                   <p style="color:red"><strong>您的密码错误</strong></p>
                   {% elif err_code==1002 %}
                   <p style="color:red"><strong>请先登录</strong></p>
+                  {% elif err_code==1003 %}
+                  <p style="color:red"><strong>密码是前端hash过的</strong></p>
                   {% end %}
                   <div class="form-group">
                     <label for="mail" class="col-xs-3 col-sm-3 control-label">用户 :</label>
@@ -90,7 +93,8 @@
                   <div class="form-group">
                     <label for="password" class="col-xs-3 col-sm-3 control-label">密码 :</label>
                     <div class="col-xs-9 col-sm-6">
-                      <input type="text" class="form-control" name="password" placeholder="密码可以为空">
+                      <input type="password" class="form-control" name="password_raw" id="password_raw" placeholder="密码可以为空">
+                      <input type="hidden" name="password" id="password">
                     </div>
                   </div>
                   <div class="form-group">
@@ -113,6 +117,7 @@
 
 {% block public_script %}
 <script>
+    console.log(Sha256.hash("123456"));
     {% if 1000<=err_code<=1002 %}
         $('#login').modal('show');    
     {% end %}
@@ -120,6 +125,14 @@
         function() {
             window.location.href='/'
         })
+    $(function(){
+      $("form").submit(function() {
+        var v=Sha256.hash($("#password_raw").val());
+        $("#password").val(v);
+        $("#password_raw").attr("disabled", "true");
+        return true;
+      });
+    });
 </script>
 {% end %}
 

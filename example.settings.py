@@ -1,5 +1,6 @@
 import os
 import torndb
+import MySQLdb
 settings = {
     "cookie_secret": "123123124412341234214321khaksdlfasdfpqwirqwevcvpisfdpqgnpqrngpqerg",
     "login_url": "/login",

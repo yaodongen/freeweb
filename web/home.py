@@ -78,7 +78,7 @@ class MainHandler(BaseHandler):
     def get(self):
         # name = tornado.escape.xhtml_escape(self.current_user)
         data = self.get_user_info()
-        user = self.get_current_user()
+        user = self.current_user
         if user:
             my_log.info("main page visit: %s" % user)
 
@@ -92,13 +92,15 @@ class LoginHandler(BaseHandler):
 
     def post(self):
         user=self.get_argument("user")
-        password=self.get_argument("password")
+        password=self.get_argument("password").lower()
         err_code=0 
         user_type=0
         if EMAIL_PAT.match(user) or PHONE_PAT.match(user):
-            password=hashlib.sha256(password).hexdigest()
+            # password=hashlib.sha256(password).hexdigest()
+            if not re.match("^\w+$",password):
+                err_code=1003
             # old user
-            if db.query("select * from user where user=%s",user):
+            elif db.query("select * from user where user=%s",user):
                 result=db.get("select type from user where user=%s and password=%s limit 1", user, password)
                 if result:
                     user_type=result["type"]
@@ -137,6 +139,7 @@ class UserHandler(BaseHandler):
             self.redirect("/")
             return 
         data=db.get("select used_flow,total_flow,donate_money,create_time from user where user=%s limit 1",self.current_user)
+        my_log.info("user page : username:%s" % (self.current_user, ))
         template_data.update(data) 
         self.render("user.html",**template_data)
 
@@ -144,7 +147,7 @@ class UserHandler(BaseHandler):
 class DonateHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        money=self.get_argument("money",0)
+        money=self.get_argument("money", 0)
         template_data=self.get_user_info()
         self.update_err_code(template_data)
         template_data["money"]=money
@@ -156,4 +159,5 @@ class DonateHandler(BaseHandler):
         if money > 0:
             db.execute("update user set type=2,donate_money=donate_money+%s,total_flow=2048 where user=%s",money, self.current_user)
             user_type=self.set_secure_cookie("user_type", "2")
+            my_log.info("donate page : username:%s donate money:%s" % (self.current_user, money))
         self.redirect("/")
