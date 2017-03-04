@@ -31,7 +31,7 @@ def run(data_type):
         base_config["server_port"]=port
         base_config["password"]=password
         base_config["pid-file"]="/var/run/ssserver%s.pid"%port
-        base_config["log-file"]="/var/log/ssserver%s.pid"%port
+        base_config["log-file"]="/var/log/ssserver%s.log"%port
         with open(main_path+"/data/ssserver%s.json"%port, "w") as wf:
             wf.write(json.dumps(base_config))
 
