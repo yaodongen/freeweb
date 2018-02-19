@@ -1,6 +1,0 @@
-*.pyc
-*.json
-*.log
-*.out
-settings.py
-tasks/config.sh
